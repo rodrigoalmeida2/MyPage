@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cartoon Cow</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #fdf6ec; /* soft pastel background */
+    }
+
+    .cow {
+      position: absolute;
+      width: 100px;
+      height: 80px;
+      background: white;
+      border-radius: 50% 50% 40% 40%;
+      box-shadow: 0 0 0 3px #000;
+      transition: transform 0.2s;
+    }
+
+    .cow::before {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 70px;
+      height: 50px;
+      background: white;
+      border-radius: 50%;
+      border: 3px solid black;
+    }
+
+    .cow .spots {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    .spot {
+      position: absolute;
+      background: black;
+      border-radius: 50%;
+    }
+
+    .spot1 {
+      top: 10px;
+      left: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .spot2 {
+      top: 30px;
+      left: 60px;
+      width: 15px;
+      height: 15px;
+    }
+
+    .eyes {
+      position: absolute;
+      top: 20px;
+      left: 25px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .eye {
+      width: 10px;
+      height: 10px;
+      background: black;
+      border-radius: 50%;
+    }
+
+    .ears {
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      display: flex;
+      justify-content: space-between;
+      width: 80px;
+    }
+
+    .ear {
+      width: 15px;
+      height: 20px;
+      background: #ffcccb;
+      border: 2px solid black;
+      border-radius: 50%;
+      transform: rotate(20deg);
+    }
+
+    .tail {
+      position: absolute;
+      bottom: 5px;
+      right: -10px;
+      width: 15px;
+      height: 5px;
+      background: #000;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cow" id="cow">
+    <div class="ears">
+      <div class="ear"></div>
+      <div class="ear"></div>
+    </div>
+    <div class="spots">
+      <div class="spot spot1"></div>
+      <div class="spot spot2"></div>
+    </div>
+    <div class="eyes">
+      <div class="eye"></div>
+      <div class="eye"></div>
+    </div>
+    <div class="tail"></div>
+  </div>
+
+  <script>
+    const cow = document.getElementById('cow');
+    const speed = 2;
+    let directionX = Math.random() < 0.5 ? -1 : 1;
+    let directionY = Math.random() < 0.5 ? -1 : 1;
+
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+
+    function moveCow() {
+      x += directionX * speed;
+      y += directionY * speed;
+
+      if (x < 0 || x + cow.clientWidth > window.innerWidth) {
+        directionX = -directionX;
+        x = Math.max(0, Math.min(x, window.innerWidth - cow.clientWidth));
+      }
+
+      if (y < 0 || y + cow.clientHeight > window.innerHeight) {
+        directionY = -directionY;
+        y = Math.max(0, Math.min(y, window.innerHeight - cow.clientHeight));
+      }
+
+      cow.style.left = `${x}px`;
+      cow.style.top = `${y}px`;
+    }
+
+    setInterval(moveCow, 20);
+
+    window.addEventListener('resize', () => {
+      x = Math.min(x, window.innerWidth - cow.clientWidth);
+      y = Math.min(y, window.innerHeight - cow.clientHeight);
+    });
+  </script>
+
+</body>
+</html>
